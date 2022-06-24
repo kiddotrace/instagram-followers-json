@@ -7,7 +7,7 @@
 
 2. Create virtual env
 
-`python3 -m venv tutorial-env`
+`python3 -m venv env`
 
 3. On Windows / Unix run
 
