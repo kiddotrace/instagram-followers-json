@@ -16,7 +16,6 @@
 
 `source tutorial-env/bin/activate`
 
-___
 
 4. Install requirements:
 
