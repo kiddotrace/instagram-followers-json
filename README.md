@@ -11,10 +11,10 @@
 
 3. On Windows / Unix run
 
-`tutorial-env\Scripts\activate.bat`
+`env\Scripts\activate.bat`
 
 
-`source tutorial-env/bin/activate`
+`source env/bin/activate`
 
 
 4. Install requirements:
