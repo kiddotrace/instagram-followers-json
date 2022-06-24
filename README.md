@@ -1,10 +1,15 @@
 # Usage:
+1. Download repo or clone it
 
-1. Create virtual env
+`git clone https://github.com/kiddotrace/instagram-followers-json`
+
+`cd instagram-followers-json`
+
+2. Create virtual env
 
 `python3 -m venv tutorial-env`
 
-2. On Windows / Unix run
+3. On Windows / Unix run
 
 `tutorial-env\Scripts\activate.bat`
 
@@ -13,7 +18,7 @@
 
 ___
 
-3. Install requirements:
+4. Install requirements:
 
 `pip3 install -r requirements.txt`
 
