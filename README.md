@@ -1,5 +1,3 @@
-# instagram-followers-json
-
 # Usage:
 
 1. Create virtual env
