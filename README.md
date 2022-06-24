@@ -27,5 +27,7 @@ Main script:
 `python3 scrapper.py --uid (userid of target) --sid (sessionid cookie) --limit (range of followers)`
 
 
-userid finder: https://findidfb.com/find-instagram-id/
+# Resources
+
+Userid finder: https://findidfb.com/find-instagram-id/
 
