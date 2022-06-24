@@ -33,5 +33,6 @@ class Scrapper:
                     next_max_id = jrequest['next_max_id']
                 except KeyError:
                     pass
+                print(len(result))
 
         return result
