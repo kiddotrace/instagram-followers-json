@@ -2,7 +2,7 @@ import json
 import argparse
 from core import Scrapper
 from aparse import ValidateLimit
-
+from utils import initialize_json
 
 user_agent = "Mozilla/5.0 (Linux; Android 11; SM-N985F Build/RP1A.200720.012; wv) " \
              "AppleWebKit/537.36 (KHTML, like Gecko) " \
@@ -23,8 +23,12 @@ if __name__ == '__main__':
                "User-Agent": user_agent,
                }
 
-    session = Scrapper(user_id=args.uid, headers=headers, limit=args.limit)
-    result = session.solution()
+    data = initialize_json()
+    final = {}
 
-    with open('followers_data.json', 'w') as file:
-        json.dump(result, file)
+    for k, v in data.items():
+        session = Scrapper(user_id=args.uid, headers=headers, limit=args.limit, username=k)
+        result = session.solution()
+        final.update(result)
+    with open(f'../autobot/followers_data.json', 'w') as file:
+        json.dump(final, file)
