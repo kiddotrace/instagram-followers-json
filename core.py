@@ -1,40 +1,57 @@
-import json
 import requests
-from utils import initialize_json
+from loguru import logger
+
+
+def validation_request(request):
+    try:
+        data = request.json()
+    except requests.exceptions.JSONDecodeError:
+        print('invalid session id')
+        raise SystemExit
+
+    return data['status']
+
 
 class Scrapper:
-    next_max_id = ''
+    url = 'https://i.instagram.com/api/v1/'
 
     def __init__(self, user_id, headers, limit, username):
         self.username = username
         self.user_id = user_id
         self.headers = headers
         self.limit = limit
-
-    def solution(self):
-        result = {
+        self.data = {
             self.username: {}
         }
-        next_max_id = ''
-        validation_request = requests.get(f'https://i.instagram.com/api/v1/users/{self.user_id}/info/',  headers=self.headers)
 
-        try:
-            validation_request = validation_request.json()
-        except requests.exceptions.JSONDecodeError:
-            print('Invalid ssid')
-            raise SystemExit
+    def parse(self):
+        max_id = ''
+        request = requests.get(Scrapper.url + f'users/{self.user_id}/info/', headers=self.headers)
+        request_status = validation_request(request)
 
-        if validation_request['status'] == 'ok':
-            for k, v in result.items():
-                while len(v) <= int(self.limit):
-                    request = requests.get(f'https://i.instagram.com/api/v1/friendships/{self.user_id}/followers/?count={self.limit}&max_id={next_max_id}',headers=self.headers, )
-                    jrequest = request.json()
-                    for line in jrequest['users']:
-                        v[f'{len(v)}'] = {'user_id': line['pk'], 'username:': line['username']}
+        if request_status == 'ok':
+            for _, value in self.data.items():
+                logger.warning(f'Account initialized {self.username}')
+                limit_condition = int(self.limit) - 1
+
+                while len(value) <= limit_condition:
+                    request = requests.get(Scrapper.url + f'friendships/{self.user_id}/followers/?count={self.limit}&max_id={max_id}', headers=self.headers)
+                    data = request.json()
+                    users = data['users']
+
+                    for line in users:
+                        if not (len(value) <= limit_condition):
+                            break
+                        value[str(len(value))] = {
+                            'user_id': line['pk'],
+                            'username:': line['username']
+                        }
+
                     try:
-                        next_max_id = jrequest['next_max_id']
+                        max_id = data['next_max_id']
                     except KeyError:
-                        pass
-                    print(len(v))
-
-        return result
+                        logger.warning(f'{self.username} followers limit! Wrote {len(value)} notes')
+                        break
+                    logger.info(f'{self.username} status: [{len(value)} / {int(self.limit)}]')
+                logger.success(f'{self.username} finished!')
+        return self.data

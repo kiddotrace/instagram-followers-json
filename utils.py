@@ -1,14 +1,12 @@
 import json
 
+
 def initialize_json():
     data = {
-        "busterzy": {
-            "user_id": "699275705"
-        },
-        "evelone192": {
+        "evelone": {
             "user_id": "4621197354"
         },
-        "shadowkekw": {
+        "shadowkek": {
             "user_id": "2283382612"
         },
         "jojohfucku": {
